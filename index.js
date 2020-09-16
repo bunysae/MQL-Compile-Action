@@ -121,9 +121,9 @@ try {
             if (errorCheckingRule.test(log)) {
               input.verbose &&
                 console.log('Warnings/errors occurred. Returning exit code 1.');
-              createComment(warnings, errors);
-
-              throw new Error('Compilation failed!');
+              createComment(warnings, errors).then(() => {
+                throw new Error('Compilation failed!');
+              });
             }
 
             exec(`rm "${metaEditorZipPath}"`, () => {
